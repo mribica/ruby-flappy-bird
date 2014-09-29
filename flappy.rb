@@ -12,7 +12,7 @@ Shoes.app :width => 300 do
   @pipe = image "assets/pipe.png"
   @pipe.move @pipe_x, @pipe_y
 
-  animate(20) do
+  @animate = animate(20) do
     @gravity = @gravity + 0.002
     @bird_y = @bird_y + @gravity
     @bird.move @bird_x, @bird_y
@@ -22,6 +22,16 @@ Shoes.app :width => 300 do
       @pipe_x = 0.9
     end
     @pipe.move @pipe_x, @pipe_y
+
+    if @bird_y > 1
+      title "Game over!"
+      @animate.stop
+    end
+
+    if @pipe_x < 0.6 && @pipe_x > 0.3 && @bird_y > @pipe_y
+      title "Game over!"
+      @animate.stop
+    end
   end
 
   keypress do |key|
