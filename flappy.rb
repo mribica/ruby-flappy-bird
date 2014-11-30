@@ -12,10 +12,18 @@ Shoes.app :width => 300 do
   @pipe = image "assets/pipe.png"
   @pipe.move @pipe_x, @pipe_y
 
+  @rotation = 0
+
   @animate = animate(20) do
     @gravity = @gravity + 0.002
     @bird_y = @bird_y + @gravity
     @bird.move @bird_x, @bird_y
+
+    if @gravity > 0
+      @bird.rotate(-@rotation)
+      @bird.rotate(-30)
+      @rotation = -30
+    end
 
     @pipe_x = @pipe_x - 0.02
     if @pipe_x < -0.2
@@ -36,5 +44,8 @@ Shoes.app :width => 300 do
 
   keypress do |key|
     @gravity = -0.02
+    @bird.rotate(-@rotation)
+    @bird.rotate(30)
+    @rotation = 30
   end
 end
